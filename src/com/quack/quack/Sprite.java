@@ -3,39 +3,45 @@ package com.quack.quack;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Sprite {
-    public Vector position;
-    public Vector velocity;
-    public Image image;
-    public Rectangle collider2D;
+public class Sprite implements Renderer {
+    private Vector position;
+    private Vector velocity;
+    private Image image;
 
     public Sprite() {
         position = new Vector(0, 0);
         velocity = new Vector(0, 0);
-        collider2D = new Rectangle(0, 0, 0, 0);
     }
-
+    
+    public Vector getPosition() {
+        return position;
+    }
+    
+    public Vector getVelocity() {
+        return velocity;
+    }
+    
     public void setPosition(double x, double y) {
         position.set(x, y);
     }
 
     public void setImage(String filename) {
         image = new Image(filename);
-        collider2D.width = image.getWidth();
-        collider2D.height = image.getHeight();
+    }  
+    
+    public void setImage(String filename, int width, int height) {
+    	image = new Image(filename, width, height, false, false);
     }
 
     public Rectangle getCollider2D() {
-        collider2D.x = position.x;
-        collider2D.y = position.y;
-        return collider2D;
+        return new Rectangle(position.getX(), position.getY(), image.getWidth(), image.getHeight());
     }
 
     public boolean overlaps(Sprite other) {
-        return this.getCollider2D().overlaps(other.getCollider2D());
+        return getCollider2D().overlaps(other.getCollider2D());
     }
 
     public void render(GraphicsContext brush) {
-        brush.drawImage(image, position.x, position.y);
+        brush.drawImage(image, position.getX(), position.getY());
     }
 }

@@ -1,10 +1,8 @@
 package com.quack.quack;
 
 public class Rectangle {
-    public double x; // x coordinate
-    public double y; // y coordinate
-    public double width; // width of the rectangle
-    public double height; // height of the rectangle
+	
+    private double x, y, width, height; // x y coordinates and width height
 
     public Rectangle(double x, double y, double width, double height){
         this.x = x;
@@ -12,6 +10,38 @@ public class Rectangle {
         this.width = width;
         this.height = height;
     }
+    
+    public double getX() {
+    	return x;
+    }
+    
+    public double getY() {
+    	return y;
+    }
+    
+    public void setX(double x) {
+		this.x = x;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public double getWidth() { 
+    	return width;
+    }
+    
+    public double getHeight() {
+    	return height;
+    }
+	
+	public void setWidth(double width) {
+		this.width = width;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
 
     public boolean overlaps(Rectangle other){
         // separating axis theorem to see with two rectangles overlap

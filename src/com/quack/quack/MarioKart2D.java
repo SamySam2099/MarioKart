@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 
 public class MarioKart2D extends Application {
+	
+    final int windowWidth = 600, windowHeight = 600; //window width and height
+
+    
     public static void main(String[] args) {
         // trying to launch the application
         try {
@@ -24,31 +28,42 @@ public class MarioKart2D extends Application {
             System.exit(0);
         }
     }
+   
 
     public void start(Stage mainStage) {
+
+    	/* Inital javafx window setup*/
         mainStage.setTitle("MarioKart2D v0.0.1"); // setting the title of the game
-
         BorderPane root = new BorderPane(); // useful for menu bar across the top
-
-        Scene mainScene = new Scene(root); // create a scene, the content area in the pane
+        Scene mainScene = new Scene(root, windowWidth, windowHeight); // create a scene, the content area in the pane
         mainStage.setScene(mainScene); // setting the scene in the pane
-
-        // custom code
-        Canvas canvas = new Canvas(600, 600); // the area where elements are rendered
+        Canvas canvas = new Canvas(windowWidth, windowHeight); // the area where elements are rendered
         GraphicsContext brush = canvas.getGraphicsContext2D();//performs all the drawing operations on the canvas
-        // acts as a brush
+        root.getChildren().add(canvas);
 
-        root.setCenter(canvas); // adding the canvas to the border pane in order to be displayed on the scene
+        
+        /*Construct world*/
+        World world = new World(windowWidth, windowHeight, Color.BLUE, brush);
+        world.beginRendering(); //begin render loop
 
-        brush.setFill(Color.BLUE); // setting the colour of the brush
-        brush.fillRect(0, 0, 600, 600); // drawing with the brush
-        // custom code
-
+        
+        /*Test sprite 1*/
         Sprite car1 = new Sprite(); // creating a sprite
-        car1.position.set(100, 100); // setting the position
+        car1.getPosition().set(100, 100); // setting the position
         car1.setImage("https://www.spriters-resource.com/resources/sheet_icons/7/6880.png"); // setting the img
-        car1.render(brush); // render it
+        
+        world.addRenderable(car1); //registering the object
+        
+        /*Test sprite 2*/
+        Sprite car2 = new Sprite(); // creating a sprite
+        car2.getPosition().set(200, 200); // setting the position
+        car2.setImage("https://www.spriters-resource.com/resources/sheets/145/147793.png?updated=1611572881", 100, 100); // setting the img and width/height
+        
+        world.addRenderable(car2); //registering the object
 
-        mainStage.show(); // showing everything on the screen
+        
+                
+        mainStage.show();    
+ 
     }
 }
