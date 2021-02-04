@@ -1,5 +1,8 @@
 package com.quack.quack;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -58,10 +61,48 @@ public class MarioKart2D extends Application {
         Sprite car2 = new Sprite(); // creating a sprite
         car2.getPosition().set(200, 200); // setting the position
         car2.setImage("https://www.spriters-resource.com/resources/sheets/145/147793.png?updated=1611572881", 100, 100); // setting the img and width/height
-        
         world.addRenderable(car2); //registering the object
 
         
+        /*Testing new functions in world class, mainly setBackgroundColor and removeAllRenderables*/
+        Random rand = new Random();
+        ArrayList<String> sprites = new ArrayList<String>();
+        sprites.add("https://www.spriters-resource.com/resources/sheets/145/147793.png?updated=1611572881");
+        sprites.add("https://www.spriters-resource.com/resources/sheets/145/147803.png?updated=1611577641");
+        sprites.add("https://www.spriters-resource.com/resources/sheets/145/147907.png?updated=1611753966");
+        sprites.add("https://www.spriters-resource.com/resources/sheets/145/147849.png?updated=1611633508");
+
+        Thread testLogicThread = new Thread(){
+            public void run(){
+            	
+            	while(true) {
+            		world.setBackgroundColor(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1));
+            		
+            		if(rand.nextInt(100) < 90) {
+            			Sprite car2 = new Sprite(); // creating a sprite
+            			if(rand.nextInt(100) < 90) {
+	            			car2.getPosition().set(rand.nextInt(windowWidth), rand.nextInt(windowHeight)); // setting the position
+	            			car2.setImage(sprites.get(rand.nextInt(sprites.size()-1)), 100, 100); // setting the img and width/height
+            			} else {
+	            			car2.getPosition().set(0, 0); // setting the position
+	            			car2.setImage(sprites.get(rand.nextInt(sprites.size()-1)), windowWidth, windowHeight); // setting the img and width/height
+            			}
+            			world.addRenderable(car2); //registering the object
+            		} else {
+            			world.removeAllRenderables();
+            		}
+            		
+            	    try {
+            	    	Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+              }
+            }
+          };
+
+        testLogicThread.start();
+
                 
         mainStage.show();    
  

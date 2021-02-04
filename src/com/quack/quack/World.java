@@ -25,6 +25,7 @@ public class World {
 	// render loop
     AnimationTimer renderLoop = new AnimationTimer() {
     	public void handle(long nanotime) {
+    		brush.setFill(backgroundColor); // setting the colour of the brush
             brush.fillRect(0, 0, width, height); //draw background first
     		for(Renderer sprite : renderObjects) {
     			sprite.render(brush); //render all registered objects
@@ -33,8 +34,7 @@ public class World {
     };
 	
     // begin rendering
-	void beginRendering() {
-		brush.setFill(backgroundColor); // setting the colour of the brush
+	public void beginRendering() {
 		renderLoop.start(); // starts renderloop
         
 	}
@@ -42,6 +42,21 @@ public class World {
 	// registers renderable object by adding it to arraylist
 	public void addRenderable(Renderer renderItem) {
 		renderObjects.add(renderItem);
+	}
+	
+	// deletes renderable object by removing it from arraylist
+	public void removeRenderable(Renderer renderItem) {
+		renderObjects.remove(renderItem);
+	}
+	
+	// removes all objects from arraylist
+	public void removeAllRenderables() {
+		renderObjects.clear();
+	}
+	
+	// sets background color
+	public void setBackgroundColor(Color color) {
+		backgroundColor = color;
 	}
 		
 }
